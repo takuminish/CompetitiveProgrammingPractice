@@ -1,59 +1,45 @@
-package AtCoder.abc261.B;
+package AtCoder.abc262.B;
 
 import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-
-        // 標準入力からの値受け取り
         Scanner scanner = new Scanner(System.in);
-        int n = Integer.parseInt(scanner.nextLine());
 
-        boolean isCorrect = true;
+        // 整数を入力 N M
+        int a[] = new int[2];
+        Arrays.setAll(a, i -> scanner.nextInt());
+        int n = a[0];
+        int m = a[1];
 
-        String[][] a = inputMultiRowArrayString(scanner, n);
+        scanner.nextLine();
+
+        // 辺を入力
+        int b[][] = inputMultiRowArrayInt(scanner, m);
+
+        boolean c[][] = new boolean[n][n];
+
+        // c[i][j] = true → 頂点iと頂点jが辺で結ばれている
+        for (int i = 0; i < m; i++) {
+            c[b[i][0] - 1][b[i][1] - 1] = true;
+            c[b[i][1] - 1][b[i][0] - 1] = true;
+        }
+
+        int answer = 0;
+
+        // 総当たり
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                // -○○○
-                // ×-○○
-                // ××-○
-                // ×××-
-                // ×の箇所は判定する必要がない
-                if (i >= j) {
-                    continue;
+            for (int j = i + 1; j < n; j++) {
+                for (int k = j + 1; k < n; k++) {
+                    if (c[i][j] && c[j][k] && c[k][i]) {
+                        answer++;
+                    }
                 }
-                switch (a[i][j]) {
-                    case "W":
-                        if (!a[j][i].equals("L")) {
-                            isCorrect = false;
-                        }
-                        break;
-                    case "L":
-                        if (!a[j][i].equals("W")) {
-                            isCorrect = false;
-                        }
-                        break;
-                    case "D":
-                        if (!a[j][i].equals("D")) {
-                            isCorrect = false;
-                        }
-                        break;
-                }
-
-                if (!isCorrect) {
-                    break;
-                }
-            }
-            if (!isCorrect) {
-                break;
             }
         }
 
-        if (isCorrect) {
-            System.out.println("correct");
-        } else {
-            System.out.println("incorrect");
-        }
+        System.out.println(answer);
+
     }
 
     /**
@@ -62,22 +48,21 @@ public class Main {
      * @param n       行数、列数
      * @return int[][] 複数行で入力された値を格納した2次元配列
      */
-    static String[][] inputMultiRowArrayString(Scanner scanner, int n) {
+    static int[][] inputMultiRowArrayInt(Scanner scanner, int m) {
         // 変数宣言
-        String[] str = new String[1000];
-        String[][] a = new String[n][n];
+        String[] str = new String[10000];
+        int[][] a = new int[m][2];
 
-        // n
-        // 1 2 3 4 5
-        // 1 2 3 4 5
-        // 1 2 3 4 5
-        // 1 2 3 4 5
+        // 1 2
+        // 1 2
+        // 1 2
+        // 1 2
         // の形式で入力されるのを変数に入力
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < m; i++) {
             str[i] = scanner.nextLine();
-            String[] s = str[i].split("");
-            for (int j = 0; j < n; j++) {
-                a[i][j] = s[j];
+            String[] s = str[i].split(" ");
+            for (int j = 0; j < 2; j++) {
+                a[i][j] = Integer.parseInt(s[j]);
             }
         }
 
