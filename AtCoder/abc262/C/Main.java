@@ -14,11 +14,14 @@ public class Main {
         Arrays.setAll(a, i -> scanner.nextInt());
 
         int answer = 0;
-        long answer2 = 0;
+
+        // ミスしたポイント!!
+        // 桁あふれを考慮できていなかった!!
+        long same = 0;
 
         for (int i = 0; i < n; i++) {
             if ((i + 1) == a[i]) {
-                answer2++;
+                same++;
                 continue;
             }
 
@@ -27,7 +30,7 @@ public class Main {
             }
 
         }
-        System.out.println(answer + ((answer2 * (answer2 - 1)) / 2));
+        System.out.println(answer + ((same * (same - 1)) / 2));
     }
 
 }
