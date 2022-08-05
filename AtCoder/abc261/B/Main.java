@@ -62,10 +62,10 @@ public class Main {
      * @param n       行数、列数
      * @return int[][] 複数行で入力された値を格納した2次元配列
      */
-    static String[][] inputMultiRowArrayString(Scanner scanner, int n) {
+    static int[][] inputMultiRowArrayString(Scanner scanner, int m) {
         // 変数宣言
         String[] str = new String[1000];
-        String[][] a = new String[n][n];
+        int[][] a = new int[m][m];
 
         // n
         // 1 2 3 4 5
@@ -73,11 +73,11 @@ public class Main {
         // 1 2 3 4 5
         // 1 2 3 4 5
         // の形式で入力されるのを変数に入力
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < m; i++) {
             str[i] = scanner.nextLine();
-            String[] s = str[i].split("");
-            for (int j = 0; j < n; j++) {
-                a[i][j] = s[j];
+            String[] s = str[i].split(" ");
+            for (int j = 0; j < m; j++) {
+                a[i][j] = Integer.parseInt(s[j]);
             }
         }
 
